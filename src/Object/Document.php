@@ -10,6 +10,7 @@ class Document
     private string $description = '';
     private string $keywords = '';
     private ?string $canonical = null;
+    private array $localize = [];
     private array $links = [];
     private array $styles = [];
     private array $scripts = [];
@@ -190,5 +191,48 @@ class Document
     public function getScripts(): array
     {
         return $this->scripts;
+    }
+
+    /**
+     * set localize data page
+     *
+     * @param string|null $key
+     * @param array $l10n
+     *
+     * @return void
+     */
+    public function addLocalize(string $key = null, array $l10n = []): void
+    {
+        if ($key) {
+            foreach ($l10n as $index => $value) {
+                if (!is_scalar($value)) {
+                    continue;
+                }
+
+                if ($value === true) {
+                    $l10n[$index] = true;
+                } else if ($value === false) {
+                    $l10n[$index] = false;
+                } else {
+                    $l10n[$index] = html_entity_decode((string)$value, ENT_QUOTES, 'UTF-8');
+                }
+            }
+
+            if (isset($this->localize[$key])) {
+                $this->localize[$key] = array_merge_recursive($this->localize[$key], $l10n);
+            } else {
+                $this->localize[$key] = $l10n;
+            }
+        }
+    }
+
+    /**
+     * get localize data page
+     *
+     * @return array
+     */
+    public function getLocalize(): array
+    {
+        return $this->localize;
     }
 }
