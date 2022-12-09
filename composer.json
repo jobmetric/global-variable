@@ -1,0 +1,40 @@
+{
+    "name": "jobmetric/global-variable",
+    "description": "It is a package for using organized variables throughout Laravel, which can use the created variables everywhere in Laravel.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Majid Mohammadian",
+            "email": "majeedmohammadian@gmail.com",
+            "homepage": "https://www.linkedin.com/in/majidmohammadian/",
+            "role": "Full Stack Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0.1",
+        "ext-json": "*",
+        "laravel/framework": "^9.19"
+    },
+    "autoload": {
+        "psr-4": {
+            "JobMetric\\GlobalVariable\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "JobMetric\\GlobalVariable\\Providers\\GlobalVariableServiceProvider"
+            ],
+            "aliases": {
+                "AuthService": "JobMetric\\GlobalVariable\\Facades\\GlobalVariableService"
+            }
+        }
+    },
+    "minimum-stability" : "stable",
+    "support": {
+        "issues": "https://github.com/jobmetric/global-variable/issues",
+        "forum": "https://twitter.com/jobmetric",
+        "source": "https://github.com/jobmetric/global-variable"
+    }
+}
