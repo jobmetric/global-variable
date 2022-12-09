@@ -2,6 +2,9 @@
 
 namespace JobMetric\GlobalVariable\Object;
 
+use Mobile_Detect;
+use Exception;
+
 class Document
 {
     private static Document $instance;
@@ -162,13 +165,22 @@ class Document
     }
 
     /**
-     * get style page
+     * get style theme
      *
-     * @return array
+     * @return string
      */
-    public function getStyles(): array
+    public function getStyles(): string
     {
-        return $this->styles;
+        $theme = '';
+        foreach ($this->styles as $style) {
+            if ($style['media'] != '') {
+                $theme .= '<link rel="'.$style['rel'].'" type="text/css" media="'.$style['media'].'" href="'.$style['href'].'"/>';
+            } else {
+                $theme .= '<link rel="'.$style['rel'].'" type="text/css" href="'.$style['href'].'"/>';
+            }
+        }
+
+        return $theme;
     }
 
     /**
@@ -184,13 +196,19 @@ class Document
     }
 
     /**
-     * get script page
+     * get script theme
      *
-     * @return array
+     * @return string
      */
-    public function getScripts(): array
+    public function getScripts(): string
     {
-        return $this->scripts;
+        $theme = '';
+        foreach ($this->scripts as $script) {
+            $theme .= '
+        <script type="text/javascript" src="'.$script.'"></script>';
+        }
+
+        return $theme;
     }
 
     /**
@@ -227,12 +245,38 @@ class Document
     }
 
     /**
-     * get localize data page
+     * get localize theme
      *
-     * @return array
+     * @return string
      */
-    public function getLocalize(): array
+    public function getLocalize(): string
     {
-        return $this->localize;
+        return '<script type="text/javascript">let localize = ' . json_encode($this->localize, JSON_UNESCAPED_UNICODE) . ';</script>';
+    }
+
+    /**
+     * check device
+     *
+     * @param string $state
+     *
+     * @return bool
+     */
+    public function check_device(string $state): bool
+    {
+        $detect = new Mobile_Detect;
+
+        if ($state == 'mobile') {
+            $check = $detect->isMobile();
+        } else if ($state == 'tablet') {
+            $check = $detect->isTablet();
+        } else {
+            try {
+                $check = $detect->is($state);
+            } catch (Exception $exception) {
+                $check = false;
+            }
+        }
+
+        return $check;
     }
 }
