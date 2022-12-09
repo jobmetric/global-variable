@@ -9,7 +9,7 @@ class GlobalVariableServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind('GlobalVariableService', function($app) {
+        $this->app->bind('GlobalVariableService', function ($app) {
             return new GlobalVariableService;
         });
     }
