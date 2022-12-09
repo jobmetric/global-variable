@@ -5,7 +5,7 @@ namespace JobMetric\GlobalVariable\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static JobMetric\GlobalVariable\Object\Document document()
+ * @method static \JobMetric\GlobalVariable\Object\Document document()
  *
  * @see \JobMetric\GlobalVariable\GlobalVariableService
  */

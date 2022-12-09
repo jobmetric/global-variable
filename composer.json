@@ -27,7 +27,7 @@
                 "JobMetric\\GlobalVariable\\Providers\\GlobalVariableServiceProvider"
             ],
             "aliases": {
-                "AuthService": "JobMetric\\GlobalVariable\\Facades\\GlobalVariableService"
+                "GlobalVariable": "JobMetric\\GlobalVariable\\Facades\\GlobalVariableService"
             }
         }
     },
