@@ -13,4 +13,16 @@ class GlobalVariableServiceProvider extends ServiceProvider
             return new GlobalVariableService;
         });
     }
+
+    public function boot()
+    {
+        // publish config
+        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('global-variable.php')], 'config');
+
+        // publish assets
+        $this->publishes([realpath(__DIR__.'/../../assets') => public_path('vendor/global-variable')], 'public');
+
+        // publish translations
+        $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'global-variable');
+    }
 }
