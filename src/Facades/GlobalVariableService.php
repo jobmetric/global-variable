@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \JobMetric\GlobalVariable\Object\Document document()
+ * @method static \JobMetric\GlobalVariable\Object\Config config()
  *
  * @see \JobMetric\GlobalVariable\GlobalVariableService
  */
