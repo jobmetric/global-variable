@@ -2,22 +2,32 @@
 
 namespace JobMetric\GlobalVariable\Object;
 
-use Mobile_Detect;
 use Exception;
+use Mobile_Detect;
 
 class Document
 {
     private static Document $instance;
 
-    private string $title = '';
-    private string $description = '';
-    private string $keywords = '';
+    private ?string $section = null;
+    private ?string $title = null;
+    private ?string $description = null;
+    private ?string $keywords = null;
     private ?string $canonical = null;
     private array $localize = [];
     private array $localize_counter = [];
     private array $links = [];
     private array $styles = [];
     private array $scripts = [];
+
+    /**
+     * construct instance object
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+    }
 
     /**
      * get instance object
@@ -31,6 +41,28 @@ class Document
         }
 
         return Document::$instance;
+    }
+
+    /**
+     * set app section
+     *
+     * @param string $section
+     *
+     * @return void
+     */
+    public function setSection(string $section)
+    {
+        $this->section = $section;
+    }
+
+    /**
+     * get app section
+     *
+     * @return string
+     */
+    public function getSection(): string
+    {
+        return $this->section;
     }
 
     /**
@@ -252,7 +284,7 @@ class Document
      */
     public function getLocalize(): string
     {
-        return '<script type="text/javascript">let localize = ' . json_encode($this->localize, JSON_UNESCAPED_UNICODE) . ';</script>';
+        return '<script type="text/javascript">let localize = '.json_encode($this->localize, JSON_UNESCAPED_UNICODE).';</script>';
     }
 
     /**
@@ -264,10 +296,10 @@ class Document
     {
         $plugins = func_get_args();
 
-        foreach($plugins as $plugin) {
-            if(!isset($this->localize_counter[$plugin])) {
+        foreach ($plugins as $plugin) {
+            if (!isset($this->localize_counter[$plugin])) {
                 $this->localize_counter[$plugin] = true;
-                switch($plugin) {
+                switch ($plugin) {
                     case 'jquery':
                         $this->addScript('vendor/global-variable/plugins/jquery/jquery.min.js');
                         break;
@@ -284,7 +316,7 @@ class Document
                         $this->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon.js');
                         $this->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon-i18n.js');
 
-                        if(Session::get('calendar') == 'jalali') {
+                        if (Session::get('calendar') == 'jalali') {
                             $this->addScript('vendor/global-variable/plugins/datetime/jalali.js');
                         }
                         break;
@@ -299,7 +331,7 @@ class Document
                         $this->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.js');
                         $this->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.init.js');
 
-                        if(__('base.direction') == 'rtl') {
+                        if (__('base.direction') == 'rtl') {
                             $this->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.rtl.min.css');
                         } else {
                             $this->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.css');
@@ -333,7 +365,7 @@ class Document
                     case 'datatable':
                         $this->addScript('vendor/global-variable/plugins/datatables/datatables.bundle.js');
 
-                        if(__('base.direction') == 'rtl') {
+                        if (__('base.direction') == 'rtl') {
                             $this->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.rtl.css');
                         } else {
                             $this->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.css');
@@ -370,7 +402,7 @@ class Document
                         $this->addStyle('vendor/global-variable/plugins/select2/dist/css/select2.min.css');
                         $this->addScript('vendor/global-variable/plugins/select2/dist/js/select2.full.min.js');
 
-                        $this->addScript('vendor/global-variable/plugins/select2/dist/js/i18n/' . __('base.lang') . '.js');
+                        $this->addScript('vendor/global-variable/plugins/select2/dist/js/i18n/'.__('base.lang').'.js');
                         break;
                     case 'tree':
                         $this->addStyle('vendor/global-variable/plugins/tree/tree.css');
