@@ -58,9 +58,9 @@ class Document
     /**
      * get app section
      *
-     * @return string
+     * @return string|null
      */
-    public function getSection(): string
+    public function getSection(): ?string
     {
         return $this->section;
     }
@@ -80,9 +80,9 @@ class Document
     /**
      * get title page
      *
-     * @return string
+     * @return string|null
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -102,9 +102,9 @@ class Document
     /**
      * get description page
      *
-     * @return string
+     * @return string|null
      */
-    public function getDescription(): string
+    public function getDescription(): ?string
     {
         return $this->description;
     }
@@ -124,9 +124,9 @@ class Document
     /**
      * get keywords page
      *
-     * @return string
+     * @return string|null
      */
-    public function getKeywords(): string
+    public function getKeywords(): ?string
     {
         return $this->keywords;
     }
