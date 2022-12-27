@@ -224,7 +224,8 @@ class Document
             if ($style['media'] != '') {
                 $theme .= '<link rel="'.$style['rel'].'" type="text/css" media="'.$style['media'].'" href="'.$style['href'].'"/>';
             } else {
-                $theme .= '<link rel="'.$style['rel'].'" type="text/css" href="'.$style['href'].'"/>';
+                $theme .= '
+<link rel="'.$style['rel'].'" type="text/css" href="'.$style['href'].'"/>';
             }
         }
 
@@ -234,13 +235,19 @@ class Document
     /**
      * set script page
      *
-     * @param string $script
+     * @param string $src
+     * @param bool $async
+     * @param bool $defer
      *
      * @return void
      */
-    public function addScript(string $script): void
+    public function addScript(string $src, bool $async = false, bool $defer = false): void
     {
-        $this->scripts[md5($script)] = $script;
+        $this->scripts[md5($src)] = [
+            'src' => $src,
+            'async' => $async,
+            'defer' => $defer
+        ];
     }
 
     /**
@@ -252,8 +259,11 @@ class Document
     {
         $theme = '';
         foreach ($this->scripts as $script) {
+            $async = $script['async'] ? ' async' : '';
+            $defer = $script['defer'] ? ' defer' : '';
+
             $theme .= '
-        <script type="text/javascript" src="'.$script.'"></script>';
+    <script type="text/javascript" src="'.$script['src'].'"'.$async.$defer.'></script>';
         }
 
         return $theme;
