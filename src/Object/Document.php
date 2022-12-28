@@ -4,6 +4,7 @@ namespace JobMetric\GlobalVariable\Object;
 
 use Exception;
 use JobMetric\GlobalVariable\Events\Document\AddPlugin;
+use JobMetric\GlobalVariable\Events\Document\Construct;
 use Mobile_Detect;
 
 class Document
@@ -15,6 +16,10 @@ class Document
     private ?string $description = null;
     private ?string $keywords = null;
     private ?string $canonical = null;
+    private string $robots = 'index,follow';
+    private ?string $logo = null;
+    private ?string $favicon = null;
+    private ?string $theme_color = null;
     private array $plugins = [];
     private array $localize = [];
     private array $localize_counter = [];
@@ -29,6 +34,19 @@ class Document
      */
     public function __construct()
     {
+        if (config()->has('global-variable.logo')) {
+            $this->logo = config('global-variable.logo');
+        }
+
+        if (config()->has('global-variable.favicon')) {
+            $this->favicon = config('global-variable.favicon');
+        }
+
+        if (config()->has('global-variable.theme_color')) {
+            $this->theme_color = config('global-variable.theme_color');
+        }
+
+        event(new Construct);
     }
 
     /**
@@ -148,11 +166,150 @@ class Document
     /**
      * get canonical link
      *
-     * @return string|null
+     * @return string
      */
-    public function getCanonical(): ?string
+    public function getCanonical(): string
     {
-        return $this->canonical;
+        $theme = '';
+        if ($this->canonical) {
+            $theme .= '<!-- canonical -->
+    <link rel="canonical" href="'.$this->canonical.'" />';
+        }
+
+        return $theme;
+    }
+
+    /**
+     * set robots
+     *
+     * @param string $robots
+     *
+     * @return void
+     */
+    public function setRobots(string $robots): void
+    {
+        $this->robots = $robots;
+    }
+
+    /**
+     * get robots
+     *
+     * @return string
+     */
+    public function getRobots(): string
+    {
+        return '<!-- robots -->
+    <meta name="robots" content="'.$this->robots.'">';
+    }
+
+    /**
+     * get theme color
+     *
+     * @return string
+     */
+    public function getThemeColor(): string
+    {
+        $theme = '';
+        if ($this->theme_color) {
+            $theme .= '<!-- theme color -->
+    <meta name="theme-color" content="'.$this->theme_color.'">
+    <meta name="msapplication-TileColor" content="'.$this->theme_color.'">';
+        }
+
+        return $theme;
+    }
+
+    /**
+     * get open graph
+     *
+     * @return string
+     */
+    public function getOpenGraph(): string
+    {
+        $theme = '';
+        if ($this->theme_color) {
+            $theme .= '<!-- open graph -->
+    <meta name="dc.title" content="'.(__('base.name') ? __('base.name').' | ' : '').$this->title.'">
+    <meta name="dc.description" content="'.$this->description.'">
+    <meta property="og:locale" content="'.__('base.og.locale').'">
+    <meta property="og:type" content="'.__('base.og.type').'">
+    <meta property="og:title" content="'.(__('base.name') ? __('base.name').' | ' : '').$this->title.'">
+    <meta name="og.description" content="'.$this->description.'">
+    <meta property="og:url" content="'.$this->canonical.'">
+    <meta property="og:site_name" content="'.(__('base.name') ? __('base.name').' | ' : '').$this->title.'">';
+        }
+
+        return $theme;
+    }
+
+    /**
+     * get favicon
+     *
+     * @return string
+     */
+    public function getFavicon(): string
+    {
+        $theme = '';
+        if ($this->favicon) {
+            $theme .= '<!-- favicon -->
+    <link href="'.$this->favicon.'" rel="icon"/>
+    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="16x16"/>
+    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="32x32"/>
+    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="96x96"/>
+    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="160x160"/>
+    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="196x196"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="57x57"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="60x60"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="72x72"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="144x144"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="152x152"/>';
+        }
+
+        return $theme;
+    }
+
+    /**
+     * get manifest
+     *
+     * @return string
+     */
+    public function getManifest(): string
+    {
+        $theme = '';
+        if($this->check_device('mobile') or $this->check_device('tablet')) {
+            $theme .= '<!-- manifest -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="msapplication-starturl" content="/">
+
+    <link href="'.$this->favicon.'" rel="icon" sizes="192x192">
+    <link href="'.$this->favicon.'" rel="icon" sizes="128x128">
+    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="128x128">
+    <link href="'.$this->favicon.'" rel="apple-touch-icon-precomposed" sizes="128x128">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+          media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+
+    <link rel="manifest" href="'.route('manifest.mobile').'">';
+        } else {
+            $theme .= '<!-- manifest -->
+    <link rel="manifest" href="'.route('manifest.mobile').'">';
+        }
+
+        return $theme;
     }
 
     /**
@@ -244,7 +401,7 @@ class Document
     public function addScript(string $src, bool $async = false, bool $defer = false): void
     {
         $this->scripts[md5($src)] = [
-            'src' => $src,
+            'src'   => $src,
             'async' => $async,
             'defer' => $defer
         ];
