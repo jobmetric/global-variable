@@ -16,14 +16,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Theme color
+    | PWA parameters
     |--------------------------------------------------------------------------
     |
-    | theme color for meta tag
+    | pwa parameters for website
     |
     */
 
-    "theme_color" => env("GLOBAL_VARIABLE_THEME_COLOR", '#fff'),
+    'pwa' => [
+        "theme_color" => env("GLOBAL_VARIABLE_THEME_COLOR", '#fff'),
+        "background_color" => env("GLOBAL_VARIABLE_BACKGROUND_COLOR", '#fff'),
+        "display" => env("GLOBAL_VARIABLE_DISPLAY", 'standalone'),
+    ],
 
     /*
     |--------------------------------------------------------------------------

@@ -2,11 +2,21 @@
 
 namespace JobMetric\GlobalVariable\Providers;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JobMetric\GlobalVariable\GlobalVariableService;
 
 class GlobalVariableServiceProvider extends ServiceProvider
 {
+    /**
+     * This namespace is applied to your controller routes.
+     *
+     * In addition, it is set as the URL generator's root namespace.
+     *
+     * @var string
+     */
+    protected $namespace = 'JobMetric\GlobalVariable\Http\Controller';
+
     public function register()
     {
         $this->app->bind('GlobalVariableService', function ($app) {
@@ -24,5 +34,8 @@ class GlobalVariableServiceProvider extends ServiceProvider
 
         // publish translations
         $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'global-variable');
+
+        // publish route
+        Route::prefix('global')->name('global.')->namespace($this->namespace)->group(realpath(__DIR__ . '/../../routes/route.php'));
     }
 }

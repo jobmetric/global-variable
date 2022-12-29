@@ -20,6 +20,7 @@ class Document
     private ?string $logo = null;
     private ?string $favicon = null;
     private ?string $theme_color = null;
+    private ?string $background_color = null;
     private array $plugins = [];
     private array $localize = [];
     private array $localize_counter = [];
@@ -42,8 +43,12 @@ class Document
             $this->favicon = config('global-variable.favicon');
         }
 
-        if (config()->has('global-variable.theme_color')) {
-            $this->theme_color = config('global-variable.theme_color');
+        if (config()->has('global-variable.pwa.theme_color')) {
+            $this->theme_color = config('global-variable.pwa.theme_color');
+        }
+
+        if (config()->has('global-variable.pwa.background_color')) {
+            $this->background_color = config('global-variable.pwa.background_color');
         }
 
         event(new Construct);
@@ -203,6 +208,16 @@ class Document
     }
 
     /**
+     * get theme color value
+     *
+     * @return string|null
+     */
+    public function getThemeColorValue(): ?string
+    {
+        return $this->theme_color;
+    }
+
+    /**
      * get theme color
      *
      * @return string
@@ -217,6 +232,16 @@ class Document
         }
 
         return $theme;
+    }
+
+    /**
+     * get background color value
+     *
+     * @return string|null
+     */
+    public function getBackgroundColorValue(): ?string
+    {
+        return $this->background_color;
     }
 
     /**
@@ -269,6 +294,16 @@ class Document
 
         return $theme;
     }
+    
+    /**
+     * get favicon value
+     *
+     * @return string
+     */
+    public function getFaviconValue(): string
+    {
+        return $this->favicon;
+    }
 
     /**
      * get manifest
@@ -278,7 +313,7 @@ class Document
     public function getManifest(): string
     {
         $theme = '';
-        if($this->check_device('mobile') or $this->check_device('tablet')) {
+        if ($this->check_device('mobile') or $this->check_device('tablet')) {
             $theme .= '<!-- manifest -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -303,10 +338,10 @@ class Document
     <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
           media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
 
-    <link rel="manifest" href="'.route('manifest.mobile').'">';
+    <link rel="manifest" href="'.route('global.manifest.index').'">';
         } else {
             $theme .= '<!-- manifest -->
-    <link rel="manifest" href="'.route('manifest.mobile').'">';
+    <link rel="manifest" href="'.route('global.manifest.index').'">';
         }
 
         return $theme;
