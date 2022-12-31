@@ -2,6 +2,6 @@
 
 namespace JobMetric\GlobalVariable\Events\Document;
 
-class Construct
+class InitDocument
 {
 }
