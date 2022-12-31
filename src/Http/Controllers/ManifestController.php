@@ -17,31 +17,32 @@ class ManifestController
         $json['name'] = __('base.pwa.name');
         $json['short_name'] = __('base.pwa.short_name');
         $json['description'] = __('base.pwa.description');
-        $json['theme_color'] = Document::getInstance()->getThemeColorValue();
-        $json['background_color'] = Document::getInstance()->getBackgroundColorValue();
+        $json['theme_color'] = Document::getInstance()->getThemeColor();
+        $json['background_color'] = Document::getInstance()->getBackgroundColor();
         $json['display'] = 'standalone';
         $json['scope'] = '/';
         $json['start_url'] = '/';
         $json['icons'] = [
             [
-                'src'   => asset(Document::getInstance()->getFaviconValue()),
+                'purpose' => 'any',
+                'src'   => asset(Document::getInstance()->getFavicon()),
                 'sizes' => '144x144',
                 'type'  => 'image/svg'
             ]/*,
             [
-                'src'   => asset(Document::getInstance()->getFaviconValue()),
+                'src'   => asset(Document::getInstance()->getFavicon()),
                 'sizes' => '512x512',
                 'type'  => 'image/svg'
             ],
             [
                 'purpose' => 'maskable',
-                'src'     => asset(Document::getInstance()->getFaviconValue()),
+                'src'     => asset(Document::getInstance()->getFavicon()),
                 'sizes'   => '192x192',
                 'type'    => 'image/svg'
             ],
             [
                 'purpose' => 'maskable',
-                'src'     => asset(Document::getInstance()->getFaviconValue()),
+                'src'     => asset(Document::getInstance()->getFavicon()),
                 'sizes'   => '512x512',
                 'type'    => 'image/svg'
             ]*/
