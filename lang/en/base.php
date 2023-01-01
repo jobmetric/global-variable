@@ -12,6 +12,10 @@ return [
     |
     */
 
+    'direction' => 'ltr',
+    'lang' => 'en',
+    'lang' => 'en_GB',
+
     'sweetalert' => [
         'title'  => [
             'warning'    => 'Warning',
