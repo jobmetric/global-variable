@@ -11,6 +11,10 @@ class Document
 {
     private static Document $instance;
 
+    private ?string $logo = null;
+    private ?string $favicon = null;
+    private ?string $theme_color = null;
+    private ?string $background_color = null;
     private ?string $section = null;
     private ?string $title = null;
     private ?string $description = null;
@@ -18,11 +22,8 @@ class Document
     private ?string $canonical = null;
     private ?string $image = null;
     private ?string $page_type = null;
-    private string $robots = 'index,follow';
-    private ?string $logo = null;
-    private ?string $favicon = null;
-    private ?string $theme_color = null;
-    private ?string $background_color = null;
+    private ?string $robots = 'index,follow';
+    private ?string $body_class = null;
     private array $plugins = [];
     private array $localize = [];
     private array $localize_counter = [];
@@ -167,6 +168,18 @@ class Document
     }
 
     /**
+     * set body class
+     *
+     * @param string $body_class
+     *
+     * @return void
+     */
+    public function setBodyClass(string $body_class): void
+    {
+        $this->body_class = $body_class;
+    }
+
+    /**
      * set plugins
      *
      * @param string $key
@@ -294,13 +307,23 @@ class Document
     }
 
     /**
-     * get app section
+     * get logo value
      *
      * @return string|null
      */
-    public function getSection(): ?string
+    public function getLogo(): ?string
     {
-        return $this->section;
+        return $this->logo;
+    }
+
+    /**
+     * get favicon value
+     *
+     * @return string|null
+     */
+    public function getFavicon(): ?string
+    {
+        return $this->favicon;
     }
 
     /**
@@ -324,13 +347,23 @@ class Document
     }
 
     /**
-     * get favicon value
+     * get app section
      *
-     * @return string
+     * @return string|null
      */
-    public function getFavicon(): string
+    public function getSection(): ?string
     {
-        return $this->favicon;
+        return $this->section;
+    }
+
+    /**
+     * get body class
+     *
+     * @return string|null
+     */
+    public function getBodyClass(): ?string
+    {
+        return $this->body_class;
     }
 
     /**
