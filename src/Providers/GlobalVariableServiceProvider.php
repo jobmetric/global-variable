@@ -32,6 +32,9 @@ class GlobalVariableServiceProvider extends ServiceProvider
         // publish assets
         $this->publishes([realpath(__DIR__.'/../../assets') => public_path('vendor/global-variable')], 'public');
 
+        // publish views
+        $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/global-variable')], 'views');
+
         // publish translations
         $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'global-variable');
 

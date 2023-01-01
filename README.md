@@ -34,12 +34,20 @@ php artisan vendor:publish --provider="JobMetric\GlobalVariable\Providers\Global
 You should now have a `config/global-variable.php` file that allows you to configure the basics of this package.
 
 
-### Public Assets
+### Publish Assets
 
 To use the plugins used in this package, the following command must be executed.
 
 ```php
 php artisan vendor:publish --provider="JobMetric\GlobalVariable\Providers\GlobalVariableServiceProvider" --tag="public"
+```
+
+### Publish Views
+
+You can use predefined views in this package.
+
+```php
+php artisan vendor:publish --provider="JobMetric\GlobalVariable\Providers\GlobalVariableServiceProvider" --tag="views"
 ```
 
 ## Documentation
