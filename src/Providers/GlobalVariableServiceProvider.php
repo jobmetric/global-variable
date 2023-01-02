@@ -24,21 +24,65 @@ class GlobalVariableServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * boot provider
+     *
+     * @return void
+     */
     public function boot()
     {
-        // publish config
-        $this->publishes([realpath(__DIR__.'/../../config/config.php') => config_path('global-variable.php')], 'config');
+        $this->registerPublishables();
 
-        // publish assets
-        $this->publishes([realpath(__DIR__.'/../../assets') => public_path('vendor/global-variable')], 'public');
-
-        // publish views
-        $this->publishes([realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/global-variable')], 'views');
-
-        // publish translations
+        // set translations
         $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'global-variable');
 
-        // publish route
-        Route::prefix('global')->name('global.')->namespace($this->namespace)->group(realpath(__DIR__ . '/../../routes/route.php'));
+        // set route
+        Route::prefix('global')->name('global.')->namespace($this->namespace)->group(realpath(__DIR__.'/../../routes/route.php'));
+    }
+
+    /**
+     * Register publishables
+     *
+     * @return void
+     */
+    private function registerPublishables(): void
+    {
+        // publish config
+        $this->publishes([
+            realpath(__DIR__.'/../../config/config.php') => config_path('global-variable.php')
+        ], 'config');
+
+        // publish assets
+        $this->publishes([
+            realpath(__DIR__.'/../../assets') => public_path('vendor/global-variable')
+        ], 'public');
+
+        // publish views
+        $this->publishes([
+            realpath(__DIR__.'/../../resources/views') => resource_path('views/vendor/global-variable')
+        ], 'views');
+
+        // publish migration
+        if (!$this->migrationExists('create_settings_table')) {
+            $this->publishes([
+                realpath(__DIR__.'/../../database/migrations/create_settings_table.php.stub') => database_path('migrations/'.date('Y_m_d_His', time()).'_create_settings_table.php')
+            ], 'migrations');
+        }
+    }
+
+    protected function migrationExists($migration)
+    {
+        $path = database_path('migrations/');
+        $files = scandir($path);
+
+        $position = false;
+        foreach ($files as &$value) {
+            $position = strpos($value, $migration);
+            if($position !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -50,4 +50,18 @@ You can use predefined views in this package.
 php artisan vendor:publish --provider="JobMetric\GlobalVariable\Providers\GlobalVariableServiceProvider" --tag="views"
 ```
 
+### Publish Migrations
+
+You need to publish the migration to create the `settings` table:
+
+```php
+php artisan vendor:publish --provider="JobMetric\GlobalVariable\Providers\GlobalVariableServiceProvider" --tag="migrations"
+```
+
+After that, you need to run migrations.
+
+```php
+php artisan migrate
+```
+
 ## Documentation
