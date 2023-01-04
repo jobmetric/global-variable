@@ -2,9 +2,14 @@
 
 namespace JobMetric\GlobalVariable\Providers;
 
+use Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use JobMetric\GlobalVariable\GlobalVariableService;
+use JobMetric\GlobalVariable\Http\Middleware\SetConfig;
+use JobMetric\GlobalVariable\Models\Setting;
+use JobMetric\GlobalVariable\Object\Config;
+use Illuminate\Support\Facades\Schema;
 
 class GlobalVariableServiceProvider extends ServiceProvider
 {
@@ -38,6 +43,8 @@ class GlobalVariableServiceProvider extends ServiceProvider
 
         // set route
         Route::prefix('global')->name('global.')->namespace($this->namespace)->group(realpath(__DIR__.'/../../routes/route.php'));
+
+        $this->setSetting();
     }
 
     /**
@@ -70,7 +77,38 @@ class GlobalVariableServiceProvider extends ServiceProvider
         }
     }
 
-    protected function migrationExists($migration)
+    /**
+     * set all setting in config object
+     *
+     * @return void
+     */
+    private function setSetting(): void
+    {
+        $settings = Cache::remember('global-setting', config('global-variable.cache_time'), function () {
+            $data = [];
+            if(Schema::hasTable((new Setting)->getTable())) {
+                $results = Setting::all();
+
+                foreach ($results as $setting) {
+                    /**
+                     * @var $setting Setting
+                     */
+
+                    if ($setting->is_json) {
+                        $data[$setting->code.'_'.$setting->key] = json_decode($setting->value, true);
+                    } else {
+                        $data[$setting->code.'_'.$setting->key] = $setting->value;
+                    }
+                }
+            }
+
+            return $data;
+        });
+
+        Config::getInstance()->setAll($settings);
+    }
+
+    private function migrationExists($migration)
     {
         $path = database_path('migrations/');
         $files = scandir($path);
@@ -78,7 +116,7 @@ class GlobalVariableServiceProvider extends ServiceProvider
         $position = false;
         foreach ($files as &$value) {
             $position = strpos($value, $migration);
-            if($position !== false) {
+            if ($position !== false) {
                 return true;
             }
         }
