@@ -7,7 +7,7 @@ return [
     | Logo & favicon
     |--------------------------------------------------------------------------
     |
-    | logo and favicon asset path
+    | Address settings of logo and favicon files for the website
     |
     */
 
@@ -16,10 +16,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Cache Time
+    |--------------------------------------------------------------------------
+    |
+    | Data caching time in seconds
+    |
+    */
+
+    'cache_time' => env("GLOBAL_VARIABLE_CACHE_TIME", 0),
+
+    /*
+    |--------------------------------------------------------------------------
     | PWA parameters
     |--------------------------------------------------------------------------
     |
-    | pwa parameters for website
+    | PWA settings for manifest.json file data
     |
     */
 
