@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use JobMetric\GlobalVariable\Http\Controllers\ManifestController;
+use JobMetric\GlobalVariable\Http\Controllers\JsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +16,5 @@ use JobMetric\GlobalVariable\Http\Controllers\ManifestController;
 Route::prefix('manifest')->name('manifest.')->group(function() {
     Route::get('/', [ManifestController::class, 'index'])->name('index');
 });
+
+Route::get('js', [JsController::class, 'index'])->name('js');
