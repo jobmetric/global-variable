@@ -16,5 +16,3 @@ use JobMetric\GlobalVariable\Http\Controllers\JsController;
 Route::prefix('manifest')->name('manifest.')->group(function() {
     Route::get('/', [ManifestController::class, 'index'])->name('index');
 });
-
-Route::get('js', [JsController::class, 'index'])->name('js');
