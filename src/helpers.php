@@ -15,8 +15,6 @@ if (!function_exists('dispatchSetting')) {
      */
     function dispatchSetting(string $code, array $object, bool $has_event = true): void
     {
-        $data = new DispatchSettingData($code, $object, $has_event);
-        
-        DispatchSettingAction::render($data);
+        DispatchSettingAction::render($code, $object, $has_event);
     }
 }
