@@ -12,23 +12,25 @@ class DispatchSettingAction
     /**
      * add user otp and send for user
      *
-     * @param DispatchSettingData $data
+     * @param string $code
+     * @param array $object
+     * @param bool $has_event
      *
      * @return void
      * @static
      */
-    public static function render(DispatchSettingData $data): void
+    public static function render(string $code, array $object, bool $has_event = true): void
     {
-        Setting::ofCode($data->code)->get()->each(function ($item) {
+        Setting::ofCode($code)->get()->each(function ($item) {
             $item->delete();
         });
 
-        foreach ($data->object as $index => $item) {
-            if (substr($index, 0, strlen($data->code)) == $data->code) {
-                $key = substr($index, (strlen($data->code) + 1), (strlen($index) - (strlen($data->code) + 1)));
+        foreach ($object as $index => $item) {
+            if (substr($index, 0, strlen($code)) == $code) {
+                $key = substr($index, (strlen($code) + 1), (strlen($index) - (strlen($code) + 1)));
 
                 $setting = new Setting;
-                $setting->code = $data->code;
+                $setting->code = $code;
                 $setting->key = $key;
                 $setting->value = is_array($item) ? json_encode($item, JSON_UNESCAPED_UNICODE) : $item;
                 $setting->is_json = is_array($item);
@@ -37,8 +39,8 @@ class DispatchSettingAction
             }
         }
 
-        if($data->has_event) {
-            event(new DispatchSettingEvent($data->code));
+        if($has_event) {
+            event(new DispatchSettingEvent($code));
         }
 
         Cache::forget('global-setting');
