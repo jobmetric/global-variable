@@ -2,6 +2,7 @@
 
 namespace JobMetric\GlobalVariable\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,7 +29,7 @@ class Setting extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'created_at'  => 'datetime',
+        'created_at' => 'datetime',
         'updated_at' => 'datetime'
     ];
 
