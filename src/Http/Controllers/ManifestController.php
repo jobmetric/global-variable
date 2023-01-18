@@ -2,8 +2,8 @@
 
 namespace JobMetric\GlobalVariable\Http\Controllers;
 
+use GlobalVariable;
 use Illuminate\Http\JsonResponse;
-use JobMetric\GlobalVariable\Object\Document;
 
 class ManifestController
 {
@@ -17,17 +17,17 @@ class ManifestController
         $json['name'] = __('base.pwa.name');
         $json['short_name'] = __('base.pwa.short_name');
         $json['description'] = __('base.pwa.description');
-        $json['theme_color'] = Document::getInstance()->getThemeColor();
-        $json['background_color'] = Document::getInstance()->getBackgroundColor();
+        $json['theme_color'] = GlobalVariable::document()->getThemeColor();
+        $json['background_color'] = GlobalVariable::document()->getBackgroundColor();
         $json['display'] = 'standalone';
         $json['scope'] = '/';
         $json['start_url'] = '/';
         $json['icons'] = [
             [
                 'purpose' => 'any',
-                'src'   => asset(Document::getInstance()->getFavicon()),
+                'src' => asset(GlobalVariable::document()->getFavicon()),
                 'sizes' => '144x144',
-                'type'  => 'image/svg'
+                'type' => 'image/svg'
             ]/*,
             [
                 'src'   => asset(Document::getInstance()->getFavicon()),
@@ -59,36 +59,36 @@ class ManifestController
     public function mobile(): JsonResponse
     {
         $json = [
-            'name'             => 'Job Metric',
-            'short_name'       => 'Job Metric',
-            'description'      => 'Job Metric',
-            'theme_color'      => '#fff',
+            'name' => 'Job Metric',
+            'short_name' => 'Job Metric',
+            'description' => 'Job Metric',
+            'theme_color' => '#fff',
             'background_color' => '#5827a7',
-            'display'          => 'standalone',
-            'scope'            => '/',
-            'start_url'        => '/',
-            'icons'            => [
+            'display' => 'standalone',
+            'scope' => '/',
+            'start_url' => '/',
+            'icons' => [
                 [
-                    'src'   => 'assets/logos/favicon.svg',
+                    'src' => 'assets/logos/favicon.svg',
                     'sizes' => '192x192',
-                    'type'  => 'image/svg'
+                    'type' => 'image/svg'
                 ],
                 [
-                    'src'   => 'assets/logos/favicon.svg',
+                    'src' => 'assets/logos/favicon.svg',
                     'sizes' => '512x512',
-                    'type'  => 'image/svg'
+                    'type' => 'image/svg'
                 ],
                 [
                     'purpose' => 'maskable',
-                    'src'     => 'assets/logos/favicon.svg',
-                    'sizes'   => '192x192',
-                    'type'    => 'image/svg'
+                    'src' => 'assets/logos/favicon.svg',
+                    'sizes' => '192x192',
+                    'type' => 'image/svg'
                 ],
                 [
                     'purpose' => 'maskable',
-                    'src'     => 'assets/logos/favicon.svg',
-                    'sizes'   => '512x512',
-                    'type'    => 'image/svg'
+                    'src' => 'assets/logos/favicon.svg',
+                    'sizes' => '512x512',
+                    'type' => 'image/svg'
                 ],
             ],
         ];

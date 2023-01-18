@@ -1,6 +1,6 @@
 <?php
 
-use JobMetric\GlobalVariable\Object\Document;
+use GlobalVariable;
 
 return [
 
@@ -14,43 +14,43 @@ return [
     */
 
     'jquery'      => function () {
-        $this->addScript('vendor/global-variable/plugins/jquery/jquery.min.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/jquery/jquery.min.js');
     },
     'jquery.form' => function () {
-        $this->addScript('vendor/global-variable/plugins/jquery.form/jquery.form.min.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/jquery.form/jquery.form.min.js');
     },
     'jquery.ui' => function () {
-        $this->addScript('vendor/global-variable/plugins/jquery-ui/jquery-ui.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/jquery-ui/jquery-ui.js');
 
-        $this->addStyle('vendor/global-variable/plugins/jquery-ui-bootstrap/jquery.ui.ie.css');
-        $this->addStyle('vendor/global-variable/plugins/jquery-ui-bootstrap/jquery-ui.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/jquery-ui-bootstrap/jquery.ui.ie.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/jquery-ui-bootstrap/jquery-ui.css');
 
-        $this->addStyle('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon.css');
-        $this->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon.js');
-        $this->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon-i18n.js');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon.css');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/datetime/jquery-ui-timepicker-addon-i18n.js');
 
         if (Session::get('calendar') == 'jalali') {
-            $this->addScript('vendor/global-variable/plugins/datetime/jalali.js');
+            GlobalVariable::document()->addScript('vendor/global-variable/plugins/datetime/jalali.js');
         }
     },
     'jquery.ui.theme' => function () {
-        $this->addPlugin('jquery-ui');
+        GlobalVariable::document()->addPlugin('jquery-ui');
 
-        $this->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.min.css');
-        $this->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.theme.min.css');
-        $this->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.structure.min.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.min.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.theme.min.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/jquery-ui/jquery-ui.structure.min.css');
     },
     'sweetalert' => function () {
-        $this->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.js');
-        $this->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.init.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.init.js');
 
         if (__('base.direction') == 'rtl') {
-            $this->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.rtl.min.css');
+            GlobalVariable::document()->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.rtl.min.css');
         } else {
-            $this->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.css');
+            GlobalVariable::document()->addStyle('vendor/global-variable/plugins/sweetalert2/dist/sweetalert2.min.css');
         }
 
-        $this->addLocalize('language', [
+        GlobalVariable::document()->addLocalize('language', [
             'sweetalert' => [
                 'title'    => [
                     'warning'    => trans('global-variable:base.sweetalert.title.warning'),
@@ -75,15 +75,15 @@ return [
         ]);
     },
     'datatable' => function () {
-        $this->addScript('vendor/global-variable/plugins/datatables/datatables.bundle.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/datatables/datatables.bundle.js');
 
         if (__('base.direction') == 'rtl') {
-            $this->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.rtl.css');
+            GlobalVariable::document()->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.rtl.css');
         } else {
-            $this->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.css');
+            GlobalVariable::document()->addStyle('vendor/global-variable/plugins/datatables/datatables.bundle.css');
         }
 
-        $this->addLocalize('language', [
+        GlobalVariable::document()->addLocalize('language', [
             'datatable' => [
                 'processing'     => trans('global-variable:base.datatable.processing'),
                 'search'         => trans('global-variable:base.datatable.search'),
@@ -104,44 +104,44 @@ return [
             ]
         ]);
 
-        $this->addLocalize('settings', [
+        GlobalVariable::document()->addLocalize('settings', [
             'datatable' => [
                 'limit' => config('global-variable.page_limit')
             ]
         ]);
     },
     'select2' => function () {
-        $this->addStyle('vendor/global-variable/plugins/select2/dist/css/select2.min.css');
-        $this->addScript('vendor/global-variable/plugins/select2/dist/js/select2.full.min.js');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/select2/dist/css/select2.min.css');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/select2/dist/js/select2.full.min.js');
 
-        $this->addScript('vendor/global-variable/plugins/select2/dist/js/i18n/'.__('base.lang').'.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/select2/dist/js/i18n/'.__('base.lang').'.js');
     },
     'tree' => function () {
-        $this->addStyle('vendor/global-variable/plugins/tree/tree.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/tree/tree.css');
     },
     'md5' => function () {
-        $this->addScript('vendor/global-variable/plugins/md5/md5.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/md5/md5.js');
     },
     'cookie' => function () {
-        $this->addScript('vendor/global-variable/plugins/cookie/src/js.cookie.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/cookie/src/js.cookie.js');
     },
     'storage' => function () {
-        $this->addScript('vendor/global-variable/plugins/storage/jquery.storage.min.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/storage/jquery.storage.min.js');
     },
     'fullscreen' => function () {
-        $this->addScript('vendor/global-variable/plugins/fullscreen/jquery.fullscreen.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/fullscreen/jquery.fullscreen.js');
     },
     'owl.carousel' => function () {
-        $this->addStyle('vendor/global-variable/plugins/owl.carousel/owl.carousel.min.css');
-        $this->addStyle('vendor/global-variable/plugins/owl.carousel/owl.theme.default.min.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/owl.carousel/owl.carousel.min.css');
+        GlobalVariable::document()->addStyle('vendor/global-variable/plugins/owl.carousel/owl.theme.default.min.css');
 
-        $this->addScript('vendor/global-variable/plugins/owl.carousel/owl.carousel.min.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/owl.carousel/owl.carousel.min.js');
     },
     'draggable' => function () {
-        $this->addScript('vendor/global-variable/plugins/draggable/draggable.bundle.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/draggable/draggable.bundle.js');
     },
     'tinymce' => function () {
-        $this->addScript('vendor/global-variable/plugins/tinymce/tinymce.bundle.js');
+        GlobalVariable::document()->addScript('vendor/global-variable/plugins/tinymce/tinymce.bundle.js');
     }
 
 ];
