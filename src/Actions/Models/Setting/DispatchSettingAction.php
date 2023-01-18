@@ -2,16 +2,16 @@
 
 namespace JobMetric\GlobalVariable\Actions\Models\Setting;
 
+use Cache;
+use GlobalVariable;
 use JobMetric\GlobalVariable\Data\Models\DispatchSettingData;
 use JobMetric\GlobalVariable\Events\Actions\DispatchSettingEvent;
 use JobMetric\GlobalVariable\Models\Setting;
-use Cache;
-use GlobalVariable;
 
 class DispatchSettingAction
 {
     /**
-     * add user otp and send for user
+     * dispatch setting
      *
      * @param string $code
      * @param array $object
@@ -38,7 +38,7 @@ class DispatchSettingAction
 
                 $setting->save();
 
-                GlobalVariable::config()->set($code . '_' . $key, $item);
+                GlobalVariable::configuration()->set($code . '_' . $key, $item);
             }
         }
 

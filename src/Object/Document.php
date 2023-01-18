@@ -204,7 +204,7 @@ class Document
     {
         $this->links[md5($href)] = [
             'href' => $href,
-            'rel'  => $rel
+            'rel' => $rel
         ];
     }
 
@@ -220,8 +220,8 @@ class Document
     public function addStyle(string $href, string $rel = 'stylesheet', string $media = ''): void
     {
         $this->styles[md5($href)] = [
-            'href'  => $href,
-            'rel'   => $rel,
+            'href' => $href,
+            'rel' => $rel,
             'media' => $media
         ];
     }
@@ -238,7 +238,7 @@ class Document
     public function addScript(string $src, bool $async = false, bool $defer = false): void
     {
         $this->scripts[md5($src)] = [
-            'src'   => $src,
+            'src' => $src,
             'async' => $async,
             'defer' => $defer
         ];
@@ -286,7 +286,7 @@ class Document
     {
         $parameters = func_get_args();
 
-        $plugins = require realpath(__DIR__.'/../../data/plugins.php');
+        $plugins = require realpath(__DIR__ . '/../../data/plugins.php');
         foreach ($plugins as $key => $func) {
             $this->setPlugin($key, $func);
         }
@@ -374,7 +374,7 @@ class Document
     private function getBaseTag(): ?string
     {
         return '<!-- base tag -->
-    <base href="'.env('APP_URL').'">
+    <base href="' . env('APP_URL') . '">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />';
     }
@@ -386,12 +386,12 @@ class Document
      */
     private function getTitleTag(): ?string
     {
-        if(is_null($this->title) && is_null(__('base.name'))) {
+        if (is_null($this->title) && is_null(__('base.name'))) {
             return null;
         }
 
         return '<!-- title -->
-    <title>'.(__('base.name') ? __('base.name') . ' | ' : '') . $this->title.'</title>';
+    <title>' . (__('base.name') ? __('base.name') . ' | ' : '') . $this->title . '</title>';
     }
 
     /**
@@ -401,12 +401,12 @@ class Document
      */
     private function getDescriptionTag(): ?string
     {
-        if(is_null($this->description)) {
+        if (is_null($this->description)) {
             return null;
         }
 
         return '<!-- description -->
-    <meta name="description" content="'.$this->description.'" />';
+    <meta name="description" content="' . $this->description . '" />';
     }
 
     /**
@@ -416,12 +416,12 @@ class Document
      */
     private function getKeywordsTag(): ?string
     {
-        if(is_null($this->keywords)) {
+        if (is_null($this->keywords)) {
             return null;
         }
 
         return '<!-- keywords -->
-    <meta name="keywords" content="'.$this->keywords.'" />';
+    <meta name="keywords" content="' . $this->keywords . '" />';
     }
 
     /**
@@ -432,7 +432,7 @@ class Document
     private function getCsrfTag(): string
     {
         return '<!-- csrf -->
-    <meta name="csrf-token" content="'.csrf_token().'"/>';
+    <meta name="csrf-token" content="' . csrf_token() . '"/>';
     }
 
     /**
@@ -442,12 +442,12 @@ class Document
      */
     private function getCanonicalTag(): ?string
     {
-        if(is_null($this->canonical)) {
+        if (is_null($this->canonical)) {
             return null;
         }
 
         $theme .= '<!-- canonical -->
-    <link rel="canonical" href="'.$this->canonical.'" />';
+    <link rel="canonical" href="' . $this->canonical . '" />';
     }
 
     /**
@@ -457,12 +457,12 @@ class Document
      */
     private function getRobotsTag(): ?string
     {
-        if(is_null($this->robots)) {
+        if (is_null($this->robots)) {
             return null;
         }
 
         return '<!-- robots -->
-    <meta name="robots" content="'.$this->robots.'">';
+    <meta name="robots" content="' . $this->robots . '">';
     }
 
     /**
@@ -472,13 +472,13 @@ class Document
      */
     private function getThemeColorTag(): ?string
     {
-        if(is_null($this->theme_color)) {
+        if (is_null($this->theme_color)) {
             return null;
         }
 
         return '<!-- theme color -->
-    <meta name="theme-color" content="'.$this->theme_color.'">
-    <meta name="msapplication-TileColor" content="'.$this->theme_color.'">';
+    <meta name="theme-color" content="' . $this->theme_color . '">
+    <meta name="msapplication-TileColor" content="' . $this->theme_color . '">';
     }
 
     /**
@@ -490,34 +490,34 @@ class Document
     {
         $theme = '<!-- open graph -->';
 
-        if(!is_null(__('base.name')) && !is_null($this->title)) {
+        if (!is_null(__('base.name')) && !is_null($this->title)) {
             $theme .= '
-    <meta property="og:title" content="'.(__('base.name') ? __('base.name').' | ' : '').$this->title.'">';
+    <meta property="og:title" content="' . (__('base.name') ? __('base.name') . ' | ' : '') . $this->title . '">';
         }
 
-        if(!is_null($this->description)) {
+        if (!is_null($this->description)) {
             $theme .= '
-    <meta name="og.description" content="'.$this->description.'">';
+    <meta name="og.description" content="' . $this->description . '">';
         }
 
-        if(!is_null($this->canonical)) {
+        if (!is_null($this->canonical)) {
             $theme .= '
-    <meta property="og:url" content="'.$this->canonical.'">';
+    <meta property="og:url" content="' . $this->canonical . '">';
         }
 
-        if(!is_null($this->image)) {
+        if (!is_null($this->image)) {
             $theme .= '
-    <meta property="og:image" content="'.$this->image.'">';
+    <meta property="og:image" content="' . $this->image . '">';
         }
 
-        if(!is_null($this->page_type)) {
+        if (!is_null($this->page_type)) {
             $theme .= '
-    <meta property="og:type" content="'.$this->page_type.'">';
+    <meta property="og:type" content="' . $this->page_type . '">';
         }
 
-        if(is_null(__('base.og.locale'))) {
+        if (is_null(__('base.og.locale'))) {
             $theme .= '
-    <meta property="og:locale" content="'.__('base.og.locale').'">';
+    <meta property="og:locale" content="' . __('base.og.locale') . '">';
         }
 
         return $theme;
@@ -530,24 +530,24 @@ class Document
      */
     private function getFaviconTag(): ?string
     {
-        if(is_null($this->favicon)) {
+        if (is_null($this->favicon)) {
             return null;
         }
 
         return '<!-- favicon -->
-    <link href="'.$this->favicon.'" rel="icon"/>
-    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="16x16"/>
-    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="32x32"/>
-    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="96x96"/>
-    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="160x160"/>
-    <link href="'.$this->favicon.'" rel="icon" type="image/png" sizes="196x196"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="57x57"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="60x60"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="72x72"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="76x76"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="144x144"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="120x120"/>
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="152x152"/>';
+    <link href="' . $this->favicon . '" rel="icon"/>
+    <link href="' . $this->favicon . '" rel="icon" type="image/png" sizes="16x16"/>
+    <link href="' . $this->favicon . '" rel="icon" type="image/png" sizes="32x32"/>
+    <link href="' . $this->favicon . '" rel="icon" type="image/png" sizes="96x96"/>
+    <link href="' . $this->favicon . '" rel="icon" type="image/png" sizes="160x160"/>
+    <link href="' . $this->favicon . '" rel="icon" type="image/png" sizes="196x196"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="57x57"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="60x60"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="72x72"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="76x76"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="144x144"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="120x120"/>
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="152x152"/>';
     }
 
     /**
@@ -564,28 +564,28 @@ class Document
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="msapplication-starturl" content="/">
 
-    <link href="'.$this->favicon.'" rel="icon" sizes="192x192">
-    <link href="'.$this->favicon.'" rel="icon" sizes="128x128">
-    <link href="'.$this->favicon.'" rel="apple-touch-icon" sizes="128x128">
-    <link href="'.$this->favicon.'" rel="apple-touch-icon-precomposed" sizes="128x128">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="icon" sizes="192x192">
+    <link href="' . $this->favicon . '" rel="icon" sizes="128x128">
+    <link href="' . $this->favicon . '" rel="apple-touch-icon" sizes="128x128">
+    <link href="' . $this->favicon . '" rel="apple-touch-icon-precomposed" sizes="128x128">
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-    <link href="'.$this->favicon.'" rel="apple-touch-startup-image"
+    <link href="' . $this->favicon . '" rel="apple-touch-startup-image"
           media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">';
         }
 
         $theme .= '
-    <link rel="manifest" href="'.route('global.manifest.index').'">';
+    <link rel="manifest" href="' . route('global.manifest.index') . '">';
 
         return $theme;
     }
@@ -597,14 +597,14 @@ class Document
      */
     private function getLinksTag(): ?string
     {
-        if(empty($this->links)) {
+        if (empty($this->links)) {
             return null;
         }
 
         $theme = '<!-- link -->';
         foreach ($this->links as $item) {
             $theme .= '
-    <link rel="'.$item['rel'].'" href="'.$item['href'].'" />';
+    <link rel="' . $item['rel'] . '" href="' . $item['href'] . '" />';
         }
 
         return $theme;
@@ -617,15 +617,15 @@ class Document
      */
     private function getStylesTag(): ?string
     {
-        if(empty($this->styles)) {
+        if (empty($this->styles)) {
             return null;
         }
 
         $theme = '<!-- style -->';
         foreach ($this->styles as $style) {
-            $media = ($style['media'] != '') ? ' media="'.$style['media'].'"' : '';
+            $media = ($style['media'] != '') ? ' media="' . $style['media'] . '"' : '';
             $theme .= '
-    <link rel="'.$style['rel'].'" type="text/css" href="'.$style['href'].'"'.$media.'/>';
+    <link rel="' . $style['rel'] . '" type="text/css" href="' . $style['href'] . '"' . $media . '/>';
         }
 
         return $theme;
@@ -638,7 +638,7 @@ class Document
      */
     private function getScriptsTag(): ?string
     {
-        if(empty($this->scripts)) {
+        if (empty($this->scripts)) {
             return null;
         }
 
@@ -648,7 +648,7 @@ class Document
             $defer = $script['defer'] ? ' defer' : '';
 
             $theme .= '
-    <script type="text/javascript" src="'.$script['src'].'"'.$async.$defer.'></script>';
+    <script type="text/javascript" src="' . $script['src'] . '"' . $async . $defer . '></script>';
         }
 
         return $theme;
@@ -661,7 +661,7 @@ class Document
      */
     private function getLocalize(): string
     {
-        return '<script type="text/javascript">let localize = '.json_encode($this->localize, JSON_UNESCAPED_UNICODE).';</script>';
+        return '<script type="text/javascript">let localize = ' . json_encode($this->localize, JSON_UNESCAPED_UNICODE) . ';</script>';
     }
 
     /**

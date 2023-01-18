@@ -10,6 +10,7 @@ use JobMetric\GlobalVariable\Http\Middleware\SetConfig;
 use JobMetric\GlobalVariable\Models\Setting;
 use JobMetric\GlobalVariable\Object\Config;
 use Illuminate\Support\Facades\Schema;
+use GlobalVariable;
 
 class GlobalVariableServiceProvider extends ServiceProvider
 {
@@ -105,7 +106,7 @@ class GlobalVariableServiceProvider extends ServiceProvider
             return $data;
         });
 
-        Config::getInstance()->setAll($settings);
+        GlobalVariable::configuration()->setAll($settings);
     }
 
     private function migrationExists($migration)

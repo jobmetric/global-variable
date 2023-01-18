@@ -2,24 +2,24 @@
 
 namespace JobMetric\GlobalVariable\Object;
 
-class Config
+class Configuration
 {
-    private static Config $instance;
+    private static Configuration $instance;
 
     private array $data = [];
 
     /**
      * get instance object
      *
-     * @return Config
+     * @return Configuration
      */
-    public static function getInstance(): Config
+    public static function getInstance(): Configuration
     {
-        if (empty(Config::$instance)) {
-            Config::$instance = new Config();
+        if (empty(Configuration::$instance)) {
+            Configuration::$instance = new Configuration;
         }
 
-        return Config::$instance;
+        return Configuration::$instance;
     }
 
     /**
@@ -89,6 +89,20 @@ class Config
     public function has(string $key): bool
     {
         return isset($this->data[$key]);
+    }
+
+    /**
+     * unset config
+     *
+     * @param string $key
+     *
+     * @return void
+     */
+    public function unset(string $key): void
+    {
+        if ($this->has($key)) {
+            unset($this->data[$key]);
+        }
     }
 
     /**

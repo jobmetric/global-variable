@@ -3,7 +3,7 @@
 namespace JobMetric\GlobalVariable;
 
 use JobMetric\GlobalVariable\Object\Document;
-use JobMetric\GlobalVariable\Object\Config;
+use JobMetric\GlobalVariable\Object\Configuration;
 
 class GlobalVariableService
 {
@@ -16,14 +16,14 @@ class GlobalVariableService
     {
         return Document::getInstance();
     }
-    
+
     /**
      * get instance config object
      *
-     * @return Config
+     * @return Configuration
      */
-    public function config(): Config
+    public function configuration(): Configuration
     {
-        return Config::getInstance();
+        return Configuration::getInstance();
     }
 }
