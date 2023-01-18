@@ -5,6 +5,7 @@ namespace JobMetric\GlobalVariable\Providers;
 use Cache;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use JobMetric\GlobalVariable\Console\Commands\CreateViewCommand;
 use JobMetric\GlobalVariable\GlobalVariableService;
 use JobMetric\GlobalVariable\Http\Middleware\SetConfig;
 use JobMetric\GlobalVariable\Models\Setting;
@@ -38,6 +39,8 @@ class GlobalVariableServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPublishables();
+
+        $this->registerCommands();
 
         // set translations
         $this->loadTranslationsFrom(realpath(__DIR__.'/../../lang'), 'global-variable');
@@ -76,6 +79,20 @@ class GlobalVariableServiceProvider extends ServiceProvider
                 realpath(__DIR__.'/../../database/migrations/create_settings_table.php.stub') => database_path('migrations/'.date('Y_m_d_His', time()).'_create_settings_table.php')
             ], 'migrations');
         }
+    }
+
+    /**
+     * Register Commands
+     *
+     * @return void
+     */
+    private function registerCommands(): void
+    {
+        $this->app->bind('command.global-variable:view', CreateViewCommand::class);
+
+        $this->commands([
+            'command.global-variable:view'
+        ]);
     }
 
     /**
