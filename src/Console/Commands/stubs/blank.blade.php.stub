@@ -1,0 +1,13 @@
+@extends('vendor.global-variable.layout')
+
+@section('content')
+    /* Your html code is hear. */
+@endsection
+
+@section('script')
+    /* Your script code is hear. */
+@endsection
+
+@section('style')
+    /* Your style code is hear. */
+@endsection
