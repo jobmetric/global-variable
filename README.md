@@ -65,3 +65,7 @@ php artisan migrate
 ```
 
 ## Documentation
+
+### Document object
+
+After publishing the `view`, you have a `layout.blade.php` file in the folder `resources/views/vendor/global-variable` where all your `views` should be extended from.
