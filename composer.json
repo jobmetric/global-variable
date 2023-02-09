@@ -14,7 +14,7 @@
     "require": {
         "php": ">=8.0.1",
         "ext-json": "*",
-        "laravel/framework": "^9.19",
+        "laravel/framework": ">=9.19",
         "mobiledetect/mobiledetectlib": "^2.8"
     },
     "autoload": {
