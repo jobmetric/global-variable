@@ -29,6 +29,8 @@ class GlobalVariableServiceProvider extends ServiceProvider
         $this->app->bind('GlobalVariableService', function ($app) {
             return new GlobalVariableService;
         });
+
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**

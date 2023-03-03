@@ -51,4 +51,16 @@ return [
 
     "page_limit" => env("GLOBAL_VARIABLE_PAGE_LIMIT", 10),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Default Template Name
+    |--------------------------------------------------------------------------
+    |
+    | Here you can specify which of the templates you want
+    | to consider as the default for the website.
+    |
+    */
+
+    'template' => env('GLOBAL_VARIABLE_TEMPLATE', 'default'),
+
 ];
