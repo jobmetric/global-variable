@@ -63,4 +63,20 @@ return [
 
     'template' => env('GLOBAL_VARIABLE_TEMPLATE', 'default'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Title mode
+    |--------------------------------------------------------------------------
+    |
+    | Here you can choose how to display the title of the page
+    | header, you can use the following modes in it.
+    |
+    | default: base | title
+    | base: base
+    | title: title
+    |
+    */
+
+    'title_mode' => env('GLOBAL_VARIABLE_TITLE_MODE', 'default'),
+
 ];
