@@ -227,6 +227,26 @@ class Document
     }
 
     /**
+     * add style page
+     *
+     * @param string $slug
+     * @param string $rel
+     * @param string $media
+     *
+     * @return void
+     */
+    public function addStylePage(string $slug, string $rel = 'stylesheet', string $media = ''): void
+    {
+        $href = 'assets/page/'.$slug.'.css';
+
+        $this->styles[md5($href)] = [
+            'href'  => $href,
+            'rel'   => $rel,
+            'media' => $media
+        ];
+    }
+
+    /**
      * add script
      *
      * @param string $src
@@ -237,6 +257,26 @@ class Document
      */
     public function addScript(string $src, bool $async = false, bool $defer = false): void
     {
+        $this->scripts[md5($src)] = [
+            'src'   => $src,
+            'async' => $async,
+            'defer' => $defer
+        ];
+    }
+
+    /**
+     * add script page
+     *
+     * @param string $slug
+     * @param bool   $async
+     * @param bool   $defer
+     *
+     * @return void
+     */
+    public function addScriptPage(string $slug, bool $async = false, bool $defer = false): void
+    {
+        $src = 'assets/page/'.$slug.'.js';
+
         $this->scripts[md5($src)] = [
             'src'   => $src,
             'async' => $async,
