@@ -237,7 +237,7 @@ class Document
      */
     public function addStylePage(string $slug, string $rel = 'stylesheet', string $media = ''): void
     {
-        $href = 'assets/page/'.$slug.'.css';
+        $href = 'template/page/'.$slug.'.css';
 
         $this->styles[md5($href)] = [
             'href'  => $href,
@@ -275,7 +275,7 @@ class Document
      */
     public function addScriptPage(string $slug, bool $async = false, bool $defer = false): void
     {
-        $src = 'assets/page/'.$slug.'.js';
+        $src = 'template/page/'.$slug.'.js';
 
         $this->scripts[md5($src)] = [
             'src'   => $src,
