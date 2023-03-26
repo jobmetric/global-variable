@@ -227,26 +227,6 @@ class Document
     }
 
     /**
-     * add style page
-     *
-     * @param string $slug
-     * @param string $rel
-     * @param string $media
-     *
-     * @return void
-     */
-    public function addStylePage(string $slug, string $rel = 'stylesheet', string $media = ''): void
-    {
-        $href = 'template/page/'.$slug.'.css';
-
-        $this->styles[md5($href)] = [
-            'href'  => $href,
-            'rel'   => $rel,
-            'media' => $media
-        ];
-    }
-
-    /**
      * add script
      *
      * @param string $src
@@ -265,23 +245,23 @@ class Document
     }
 
     /**
-     * add script page
+     * add asset page
      *
      * @param string $slug
-     * @param bool   $async
-     * @param bool   $defer
      *
      * @return void
      */
-    public function addScriptPage(string $slug, bool $async = false, bool $defer = false): void
+    public function addAssetPage(string $slug): void
     {
-        $src = 'template/page/'.$slug.'.js';
+        $template = config('global-variable.template');
 
-        $this->scripts[md5($src)] = [
-            'src'   => $src,
-            'async' => $async,
-            'defer' => $defer
-        ];
+        if(file_exists(resource_path('template/'.$template.'/page/'.$slug.'.css'))) {
+            $this->addStyle('template/'.$template.'/page/'.$slug.'.css');
+        }
+
+        if(file_exists(resource_path('template/'.$template.'/page/'.$slug.'.js'))) {
+            $this->addScript('template/'.$template.'/page/'.$slug.'.js');
+        }
     }
 
     /**
