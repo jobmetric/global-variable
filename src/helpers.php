@@ -53,17 +53,29 @@ if(!function_exists('theme')) {
             abort(404, "Not set the first param in the theme function yet.");
         }
 
-        $template = config('global-variable.default');
+        $template = getTemplate();
         $view_dir = implode('/', explode('.', $view));
 
-        if(file_exists(resource_path("views/templates/{$template}/{$view_dir}.blade.php"))) {
-            return view("templates.{$template}.{$view}", $data, $mergeData);
+        if(file_exists(resource_path("views/templates/{$template}/pages/{$view_dir}.blade.php"))) {
+            return view("templates.{$template}.pages.{$view}", $data, $mergeData);
         } else {
-            if(file_exists(resource_path("views/templates/default/{$view_dir}.blade.php"))) {
-                return view("templates.default.{$view}", $data, $mergeData);
+            if(file_exists(resource_path("views/templates/default/pages/{$view_dir}.blade.php"))) {
+                return view("templates.default.pages.{$view}", $data, $mergeData);
             } else {
                 abort(404, "View file '{$view}' not found.");
             }
         }
+    }
+}
+
+if(!function_exists('getTemplate')) {
+    /**
+     * Get template name
+     *
+     * @return string
+     */
+    function getTemplate(): string
+    {
+        return config('global-variable.template');
     }
 }
