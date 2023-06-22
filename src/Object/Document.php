@@ -404,14 +404,16 @@ class Document
      *
      * @return string|null
      */
-    private function getTitle(): ?string
+    public function getTitle(string $mode = null): ?string
     {
         if(is_null($this->title) && is_null(__('base.name'))) {
             return null;
         }
 
+        $mode = $mode ?? config('global-variable.title_mode');
+
         $title = null;
-        switch(config('global-variable.title_mode')) {
+        switch($mode) {
             case 'default':
                 $title = (__('base.name') ? __('base.name').' | ' : '').$this->title;
                 break;
