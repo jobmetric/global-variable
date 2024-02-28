@@ -50,7 +50,18 @@ class GlobalVariableServiceProvider extends ServiceProvider
         // set route
         Route::prefix('global')->name('global.')->namespace($this->namespace)->group(realpath(__DIR__.'/../../routes/route.php'));
 
-        $this->setSetting();
+        if($this->isConnectedToDatabase()) {
+            $this->setSetting();
+        }
+    }
+
+    private function isConnectedToDatabase(): bool {
+        try {
+            \DB::connection()->getPdo();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
